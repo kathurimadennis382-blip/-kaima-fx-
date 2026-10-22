@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#101827">
+<title>KAIMA FX — Trading Technology Demo</title>
+<style>
+:root{--bg:#0b1220;--panel:#121d2e;--panel2:#19263a;--line:#2b3a50;--text:#f4f7fb;--muted:#9eacc0;--lime:#c6f36a;--green:#43d39e;--red:#ff7185;--amber:#f5c76b}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:15px/1.45 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+button,input,select{font:inherit}button{cursor:pointer;border:0;border-radius:10px;padding:10px 13px;font-weight:700}
+a{color:var(--lime)}.app{max-width:1200px;margin:auto;padding:18px}
+header{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:18px}
+.brand{display:flex;align-items:center;gap:12px}.logo{width:46px;height:46px;border-radius:14px;background:var(--lime);color:#15220b;display:grid;place-items:center;font-size:25px;font-weight:900}
+h1{font-size:23px;line-height:1.1;margin:0;letter-spacing:.5px}.sub{font-size:11px;color:var(--lime);letter-spacing:1.7px;font-weight:800;margin-top:5px}
+.header-right{display:flex;gap:9px;align-items:center;flex-wrap:wrap}.demo-pill{background:#25351d;color:var(--lime);padding:8px 11px;border:1px solid #455b2c;border-radius:999px;font-size:12px;font-weight:800}
+.btn-primary{background:var(--lime);color:#15220b}.btn-secondary{background:var(--panel2);color:var(--text);border:1px solid var(--line)}.btn-danger{background:#492431;color:#ffdbe1;border:1px solid #814052}
+.layout{display:grid;grid-template-columns:220px minmax(0,1fr);gap:18px}
+nav,.panel,.metric{background:var(--panel);border:1px solid var(--line);border-radius:16px}
+nav{padding:12px;height:max-content;position:sticky;top:12px}nav button{display:flex;width:100%;text-align:left;align-items:center;gap:11px;background:transparent;color:var(--muted);margin:3px 0;padding:12px;font-weight:650}nav button.active,nav button:hover{background:var(--panel2);color:var(--lime)}
+.nav-note{border-top:1px solid var(--line);margin-top:15px;padding:13px 8px 5px;color:var(--muted);font-size:12px}
+main{min-width:0}.page{display:none}.page.active{display:block}.page-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:15px}.page-head h2{margin:0 0 4px;font-size:22px}.muted{color:var(--muted)}.small{font-size:12px}
+.metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:14px}.metric{padding:15px}.metric-label{font-size:12px;color:var(--muted)}.metric-value{font-size:23px;font-weight:800;margin:7px 0 3px}.metric-foot{font-size:11px;color:var(--muted)}
+.content-grid{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(250px,1fr);gap:14px}.panel{padding:16px;margin-bottom:14px;min-width:0}.panel-title{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:13px;font-weight:800}.panel-title span:last-child{color:var(--muted);font-size:12px;font-weight:500}
+.chart-wrap{height:270px;position:relative}.chart-wrap canvas{width:100%;height:100%;display:block}.toolbar{display:flex;gap:7px;flex-wrap:wrap}.toolbar button{padding:7px 10px;font-size:12px}.toolbar button.selected{background:var(--lime);color:#15220b}
+table{width:100%;border-collapse:collapse;font-size:13px}th,td{text-align:left;padding:11px 7px;border-bottom:1px solid var(--line)}th{color:var(--muted);font-size:11px;font-weight:700}tr:last-child td{border-bottom:0}
+.tag{display:inline-block;padding:4px 8px;border-radius:7px;font-size:11px;font-weight:800}.buy{background:#183c36;color:#71e6bd}.sell{background:#482532;color:#ff9aa9}.neutral{background:#3a3424;color:#f7d68a}
+.signal-list{display:grid;gap:9px}.signal{background:var(--panel2);border:1px solid var(--line);padding:12px;border-radius:12px;display:flex;justify-content:space-between;gap:12px;align-items:center}.signal strong{display:block}.signal small{color:var(--muted)}
+.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.field{display:grid;gap:6px}.field label{font-size:12px;color:var(--muted)}.field input,.field select{width:100%;background:#0d1726;color:var(--text);border:1px solid var(--line);border-radius:9px;padding:11px}
+.notice{background:#252c22;border:1px solid #455a32;border-radius:12px;padding:12px;color:#d9eac5;font-size:12px;margin:12px 0}.risk-note{background:#30251b;border-color:#6d4d2b;color:#f5d5a4}
+.cards-3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.feature{background:var(--panel2);border:1px solid var(--line);padding:15px;border-radius:13px}.feature .icon{font-size:23px;margin-bottom:9px}.feature h3{font-size:15px;margin:0 0 5px}.feature p{font-size:12px;color:var(--muted);margin:0}
+.lesson{display:flex;gap:12px;align-items:flex-start;padding:13px 0;border-bottom:1px solid var(--line)}.lesson:last-child{border:0}.lesson-num{background:#2b3a50;color:var(--lime);border-radius:10px;padding:9px 12px;font-weight:800}
+footer{text-align:center;color:var(--muted);font-size:11px;padding:20px 0 8px}.toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:var(--lime);color:#15220b;padding:11px 16px;border-radius:12px;font-weight:800;display:none;z-index:5;box-shadow:0 8px 30px #0006}
+.empty{text-align:center;color:var(--muted);padding:20px}
+@media(max-width:850px){.layout{grid-template-columns:1fr}nav{position:static;display:flex;overflow-x:auto;gap:3px;padding:7px}nav button{width:auto;white-space:nowrap;margin:0;padding:10px}.nav-note{display:none}.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.content-grid{grid-template-columns:1fr}.cards-3{grid-template-columns:1fr}.app{padding:12px}.metric-value{font-size:20px}}
+@media(max-width:420px){h1{font-size:19px}.metric{padding:12px}.metric-value{font-size:18px}.panel{padding:12px}.form-grid{grid-template-columns:1fr}.chart-wrap{height:220px}table{font-size:12px}th,td{padding:9px 4px}}
+</style>
+</head>
+<body>
+<div class="app">
+<header>
+  <div class="brand"><div class="logo">K</div><div><h1>KAIMA FX</h1><div class="sub">TRADING TECHNOLOGY</div></div></div>
+  <div class="header-right"><span class="demo-pill">● DEMO MODE — NO REAL MONEY</span><button class="btn-primary" id="resetBtn">Reset demo</button></div>
+</header>
+<div class="layout">
+<nav aria-label="Main navigation">
+  <button class="active" data-page="overview">◫ <span>Overview</span></button>
+  <button data-page="signals">⌁ <span>Trading signals</span></button>
+  <button data-page="automation">⚙ <span>Automation lab</span></button>
+  <button data-page="history">▤ <span>Trade history</span></button>
+  <button data-page="risk">♢ <span>Risk controls</span></button>
+  <button data-page="academy">▣ <span>Academy</span></button>
+  <div class="nav-note">Prototype build 0.1<br>All figures are simulated.</div>
+</nav>
+<main>
+<section class="page active" id="page-overview">
+  <div class="page-head"><div><h2>Trading overview</h2><div class="muted small">A simple place to inspect signals and test a strategy.</div></div><span class="tag neutral">SIMULATED ACCOUNT</span></div>
+  <div class="metrics">
+    <div class="metric"><div class="metric-label">Demo balance</div><div class="metric-value" id="balance">KSh 100,000</div><div class="metric-foot">Starting sample balance</div></div>
+    <div class="metric"><div class="metric-label">Demo equity</div><div class="metric-value" id="equity">KSh 100,000</div><div class="metric-foot">Balance plus open P/L</div></div>
+    <div class="metric"><div class="metric-label">Closed demo trades</div><div class="metric-value" id="tradeCount">0</div><div class="metric-foot">Since last reset</div></div>
+    <div class="metric"><div class="metric-label">Demo net P/L</div><div class="metric-value" id="pnl">KSh 0</div><div class="metric-foot">Not a real return</div></div>
+  </div>
+  <div class="content-grid">
+    <div class="panel"><div class="panel-title">EUR/USD sample chart <span>Illustrative data</span></div><div class="toolbar" id="timeframes"><button class="selected" data-tf="1H">1H</button><button data-tf="4H">4H</button><button data-tf="1D">1D</button></div><div class="chart-wrap"><canvas id="chart" aria-label="Illustrative candlestick chart"></canvas></div><div class="muted small">Illustrative prices only; not live market data.</div></div>
+    <div class="panel"><div class="panel-title">Latest signals <span>Rule-based demo</span></div><div class="signal-list" id="overviewSignals"></div><div class="notice">Signals are examples generated from sample data. They are not investment advice.</div><button class="btn-secondary" data-goto="signals">View all signals →</button></div>
+  </div>
+  <div class="panel"><div class="panel-title">Quick demo trade <span>No broker connection</span></div><div class="form-grid"><div class="field"><label for="symbolQuick">Instrument</label><select id="symbolQuick"><option>EUR/USD</option><option>GBP/USD</option><option>USD/JPY</option><option>XAU/USD</option></select></div><div class="field"><label for="sideQuick">Side</label><select id="sideQuick"><option>BUY</option><option>SELL</option></select></div></div><div style="margin-top:12px"><button class="btn-primary" id="quickTrade">Open simulated trade</button></div></div>
+</section>
+<section class="page" id="page-signals">
+  <div class="page-head"><div><h2>Trading signals</h2><div class="muted small">Sample signals with transparent rules and no live feed.</div></div><button class="btn-secondary" id="refreshSignals">Regenerate examples</button></div>
+  <div class="notice risk-note">A BUY or SELL label is not a guarantee. These examples use invented sample readings and should not be used to place real trades.</div>
+  <div class="panel"><div class="panel-title">Signal watchlist <span>Demo only</span></div><table><thead><tr><th>Instrument</th><th>Timeframe</th><th>Signal</th><th>Sample rule</th><th>Action</th></tr></thead><tbody id="signalTable"></tbody></table></div>
+</section>
+<section class="page" id="page-automation">
+  <div class="page-head"><div><h2>Automation lab</h2><div class="muted small">Experiment with rules without placing real orders.</div></div><span class="tag neutral">PAPER TRADING</span></div>
+  <div class="panel"><div class="panel-title">Strategy settings <span>Saved in this session only</span></div>
+  <div class="form-grid">
+    <div class="field"><label for="strategy">Strategy</label><select id="strategy"><option value="ma">Moving-average crossover</option><option value="rsi">RSI threshold example</option></select></div>
+    <div class="field"><label for="autoSymbol">Instrument</label><select id="autoSymbol"><option>EUR/USD</option><option>GBP/USD</option><option>USD/JPY</option><option>XAU/USD</option></select></div>
+    <div class="field"><label for="riskPct">Risk per simulated trade (%)</label><input id="riskPct" type="number" min="0.1" max="2" step="0.1" value="0.5"></div>
+    <div class="field"><label for="maxTrades">Maximum demo trades</label><input id="maxTrades" type="number" min="1" max="10" value="3"></div>
+  </div>
+  <div class="notice">The strategy is not connected to live market data or a broker. This page only simulates trade outcomes to help test the interface.</div>
+  <button class="btn-primary" id="runAutomation">Run demo strategy</button> <button class="btn-danger" id="stopAutomation">■ Stop demo automation</button>
+  <p id="autoStatus" class="muted small">Status: stopped.</p>
+  </div>
+  <div class="panel"><div class="panel-title">Automation safeguards</div><div class="cards-3">
+    <div class="feature"><div class="icon">🛑</div><h3>Emergency stop</h3><p>Stops further demo orders when pressed.</p></div>
+    <div class="feature"><div class="icon">⚖️</div><h3>Risk limit</h3><p>Demo risk is capped at 2% per trade.</p></div>
+    <div class="feature"><div class="icon">🧾</div><h3>Audit trail</h3><p>Simulated orders appear in the history table.</p></div>
+  </div></div>
+</section>
+<section class="page" id="page-history">
+  <div class="page-head"><div><h2>Trade history</h2><div class="muted small">Your local demo activity in this browser session.</div></div><button class="btn-secondary" id="clearHistory">Clear history</button></div>
+  <div class="panel"><div class="panel-title">Simulated orders <span id="historyCount">0 records</span></div><div style="overflow-x:auto"><table><thead><tr><th>Time</th><th>Instrument</th><th>Side</th><th>Entry sample</th><th>Result</th><th>Type</th></tr></thead><tbody id="historyTable"></tbody></table></div><div id="emptyHistory" class="empty">No demo trades yet. Open one from the overview or run the demo strategy.</div></div>
+</section>
+<section class="page" id="page-risk">
+  <div class="page-head"><div><h2>Risk controls</h2><div class="muted small">Educational settings for simulated trading.</div></div></div>
+  <div class="panel"><div class="panel-title">Risk calculator</div><div class="form-grid">
+    <div class="field"><label for="calcBalance">Demo account balance (KSh)</label><input id="calcBalance" type="number" min="0" value="100000"></div>
+    <div class="field"><label for="calcRisk">Risk percentage (%)</label><input id="calcRisk" type="number" min="0.1" max="2" step="0.1" value="0.5"></div>
+  </div><div class="metric" style="margin-top:14px"><div class="metric-label">Illustrative amount at risk</div><div class="metric-value" id="riskAmount">KSh 500</div><div class="metric-foot">A planning estimate, not a loss prediction or guarantee.</div></div><div class="notice risk-note">Forex and leveraged products can cause rapid losses. Stop-loss orders may not execute at the requested price during gaps or volatile markets.</div></div>
+  <div class="panel"><div class="panel-title">Before any live launch</div><ul class="muted"><li>Use a broker's official API and test environment.</li><li>Never collect or store users' broker passwords.</li><li>Protect API credentials on a secure server, not in front-end code.</li><li>Test with historical data and demo accounts before live execution.</li><li>Check applicable Kenyan regulatory requirements before offering signals or automation commercially.</li></ul></div>
+</section>
+<section class="page" id="page-academy">
+  <div class="page-head"><div><h2>Trading academy</h2><div class="muted small">Short beginner lessons for learning the basics.</div></div></div>
+  <div class="panel">
+    <div class="lesson"><div class="lesson-num">01</div><div><strong>What is a currency pair?</strong><p class="muted small">EUR/USD compares the euro with the US dollar. Price movements can go in either direction.</p></div></div>
+    <div class="lesson"><div class="lesson-num">02</div><div><strong>Signals are not certainty</strong><p class="muted small">A signal is a rule-based observation. It can fail, especially when markets change.</p></div></div>
+    <div class="lesson"><div class="lesson-num">03</div><div><strong>Understand risk and leverage</strong><p class="muted small">Leverage magnifies gains and losses. Learn position sizing and drawdown before considering live trades.</p></div></div>
+    <div class="lesson"><div class="lesson-num">04</div><div><strong>Backtesting and demo trading</strong><p class="muted small">Test rules on historical data and then in a demo environment. Include fees, spreads and slippage.</p></div></div>
+  </div>
+</section>
+<footer>KAIMA FX prototype • Demo-only interface • Not financial advice • No live prices, brokerage, or real order execution.</footer>
+</main>
+</div>
+</div>
+<div class="toast" id="toast" role="status"></div>
+<script>
+const $=s=>document.querySelector(s), $$=s=>document.querySelectorAll(s);
+let balance=100000, trades=[], automationRunning=false, chartTf='1H';
+const money=n=>'KSh '+Math.round(n).toLocaleString('en-KE');
+const instruments=['EUR/USD','GBP/USD','USD/JPY','XAU/USD'];
+let signals=[
+ {symbol:'EUR/USD',tf:'1H',side:'BUY',rule:'Sample MA crossover'},
+ {symbol:'GBP/USD',tf:'4H',side:'NEUTRAL',rule:'Mixed sample readings'},
+ {symbol:'USD/JPY',tf:'1H',side:'SELL',rule:'Sample RSI threshold'},
+ {symbol:'XAU/USD',tf:'1D',side:'NEUTRAL',rule:'Insufficient sample trend'}
+];
+function toast(msg){let t=$('#toast');t.textContent=msg;t.style.display='block';setTimeout(()=>t.style.display='none',2300)}
+function go(page){$$('.page').forEach(p=>p.classList.toggle('active',p.id==='page-'+page));$$('nav button[data-page]').forEach(b=>b.classList.toggle('active',b.dataset.page===page));if(page==='overview')drawChart();window.scrollTo({top:0,behavior:'smooth'})}
+$$('nav button[data-page]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.page)));
+$$('[data-goto]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.goto)));
+function tag(side){return `<span class="tag ${side.toLowerCase()}">${side}</span>`}
+function renderSignals(){
+ $('#overviewSignals').innerHTML=signals.slice(0,3).map(s=>`<div class="signal"><div><strong>${s.symbol}</strong><small>${s.tf} · ${s.rule}</small></div>${tag(s.side)}</div>`).join('');
+ $('#signalTable').innerHTML=signals.map((s,i)=>`<tr><td><strong>${s.symbol}</strong></td><td>${s.tf}</td><td>${tag(s.side)}</td><td>${s.rule}</td><td><button class="btn-secondary" data-signal="${i}">Simulate</button></td></tr>`).join('');
+ $$('[data-signal]').forEach(b=>b.addEventListener('click',()=>{let s=signals[+b.dataset.signal];if(s.side==='NEUTRAL'){toast('Neutral signal: no demo order opened.');return}openTrade(s.symbol,s.side,'Signal demo')}));
+}
+function updateStats(){let pnl=trades.reduce((a,t)=>a+t.result,0);$('#balance').textContent=money(balance+pnl);$('#equity').textContent=money(balance+pnl);$('#tradeCount').textContent=trades.length;$('#pnl').textContent=money(pnl);$('#pnl').style.color=pnl>=0?'var(--green)':'var(--red)';$('#historyCount').textContent=trades.length+' records';$('#historyTable').innerHTML=trades.map(t=>`<tr><td>${t.time}</td><td>${t.symbol}</td><td>${tag(t.side)}</td><td>${t.entry}</td><td style="color:${t.result>=0?'var(--green)':'var(--red)'}">${t.result>=0?'+':''}${money(t.result)}</td><td>${t.type}</td></tr>`).join('');$('#emptyHistory').style.display=trades.length?'none':'block';}
+function openTrade(symbol,side,type='Manual demo'){let risk=Math.max(.1,Math.min(2,Number($('#riskPct')?.value||.5)));let result=Math.round((Math.random()-.48)*balance*risk/100*2);let entry=symbol==='XAU/USD'?'2,3xx.xx':symbol==='USD/JPY'?'14x.xxx':symbol==='GBP/USD'?'1.2xxxx':'1.0xxxx';trades.unshift({time:new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'}),symbol,side,entry,result,type});updateStats();toast('Simulated order recorded — no real trade placed.')}
+$('#quickTrade').addEventListener('click',()=>openTrade($('#symbolQuick').value,$('#sideQuick').value));
+function drawChart(){
+ const c=$('#chart');if(!c)return;const r=c.getBoundingClientRect();const dpr=window.devicePixelRatio||1;c.width=Math.max(300,r.width*dpr);c.height=Math.max(180,r.height*dpr);const x=c.getContext('2d');x.scale(dpr,dpr);const w=r.width,h=r.height;
+ x.clearRect(0,0,w,h);x.strokeStyle='#2b3a50';x.lineWidth=1;for(let i=1;i<5;i++){let y=h*i/5;x.beginPath();x.moveTo(0,y);x.lineTo(w,y);x.stroke()}
+ let seed=chartTf==='1D'?23:chartTf==='4H'?15:9, price=.5;const n=Math.max(22,Math.floor(w/12));let data=[];
+ for(let i=0;i<n;i++){seed=(seed*9301+49297)%233280;let change=(seed/233280-.48)*.09;let o=price;let cl=Math.max(.15,Math.min(.85,o+change));seed=(seed*9301+49297)%233280;let hi=Math.max(o,cl)+seed/233280*.04;seed=(seed*9301+49297)%233280;let lo=Math.min(o,cl)-seed/233280*.04;data.push({o,cl,hi,lo});price=cl}
+ let min=Math.min(...data.map(a=>a.lo)),max=Math.max(...data.map(a=>a.hi));const py=v=>h-16-(v-min)/(max-min||1)*(h-32);const step=w/n,cw=Math.max(3,step*.48);
+ data.forEach((a,i)=>{let cx=i*step+step/2,up=a.cl>=a.o;x.strokeStyle=up?'#43d39e':'#ff7185';x.fillStyle=x.strokeStyle;x.beginPath();x.moveTo(cx,py(a.hi));x.lineTo(cx,py(a.lo));x.stroke();let y=Math.min(py(a.o),py(a.cl)),hh=Math.max(2,Math.abs(py(a.o)-py(a.cl)));x.fillRect(cx-cw/2,y,cw,hh)});
+ x.fillStyle='#9eacc0';x.font='10px system-ui';x.fillText('SAMPLE PRICE',5,12)
+}
+$$('#timeframes button').forEach(b=>b.addEventListener('click',()=>{$$('#timeframes button').forEach(k=>k.classList.remove('selected'));b.classList.add('selected');chartTf=b.dataset.tf;drawChart()}));
+$('#refreshSignals').addEventListener('click',()=>{signals=signals.map(s=>({...s,side:['BUY','SELL','NEUTRAL'][Math.floor(Math.random()*3)],rule:'Regenerated sample rule'}));renderSignals();toast('Sample signals regenerated.')});
+$('#runAutomation').addEventListener('click',()=>{automationRunning=true;$('#autoStatus').textContent='Status: running a one-time simulated strategy test.';let n=Math.max(1,Math.min(10,parseInt($('#maxTrades').value||3)));let risk=Number($('#riskPct').value);if(!Number.isFinite(risk)||risk<=0){toast('Enter a valid risk value.');return}if(risk>2){$('#riskPct').value=2;risk=2;toast('Risk capped at 2% for this demo.')}for(let i=0;i<n;i++){let sym=$('#autoSymbol').value;let side=Math.random()>.5?'BUY':'SELL';openTrade(sym,side,'Automation demo')}automationRunning=false;$('#autoStatus').textContent='Status: completed. Simulated orders only.'});
+$('#stopAutomation').addEventListener('click',()=>{automationRunning=false;$('#autoStatus').textContent='Status: stopped by emergency stop.';toast('Demo automation stopped.')});
+$('#clearHistory').addEventListener('click',()=>{trades=[];updateStats();toast('Demo history cleared.')});
+$('#calcBalance').addEventListener('input',calcRisk);$('#calcRisk').addEventListener('input',calcRisk);
+function calcRisk(){let b=Math.max(0,Number($('#calcBalance').value)||0),r=Math.max(0,Math.min(2,Number($('#calcRisk').value)||0));$('#riskAmount').textContent=money(b*r/100)}
+$('#resetBtn').addEventListener('click',()=>{balance=100000;trades=[];renderSignals();updateStats();$('#autoStatus').textContent='Status: stopped.';toast('Demo account reset.')});
+window.addEventListener('resize',drawChart);renderSignals();updateStats();calcRisk();drawChart();
+</script>
+</body>
+</html>
